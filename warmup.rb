@@ -66,38 +66,47 @@
 # p binary_search([1, 2, 3, 4, 5, 7], 6) # => nil
 
 
-def merge_sort(arr)
-  if arr.length < 2
-    arr
-  else
-    middle = arr.length / 2
-    left = arr.take(middle)
-    right = arr.drop(middle)
-
-    merge(merge_sort(left), merge_sort(right))
-  end
-end
-
-def merge(left, right)
-  sorted = []
-
-  until left.empty? || right.empty?
-    if left.first < right.first
-      sorted << left.shift
-    elsif right.first < left.first
-      sorted << right.shift
-    end
-  end
-
-  sorted + left + right
-end
-
-p merge_sort([4, 3, 6, 2]) #=> [2, 3, 4, 6]
+# def merge_sort(arr)
+#   if arr.length < 2
+#     arr
+#   else
+#     middle = arr.length / 2
+#     left = arr.take(middle)
+#     right = arr.drop(middle)
+#
+#     merge(merge_sort(left), merge_sort(right))
+#   end
+# end
+#
+# def merge(left, right)
+#   sorted = []
+#
+#   until left.empty? || right.empty?
+#     if left.first < right.first
+#       sorted << left.shift
+#     elsif right.first < left.first
+#       sorted << right.shift
+#     end
+#   end
+#
+#   sorted + left + right
+# end
+#
+# p merge_sort([4, 3, 6, 2]) #=> [2, 3, 4, 6]
 
 def subsets(arr)
+  if arr.empty?
+    return [[]]
+  else
+    last_num = arr[-1]
+    smallerSubset = subsets(arr[0..-2])
+    largerSubset = smallerSubset.map do |smallerArr|
+      smallerArr + [last_num]
+    end
 
+    smallerSubset.concat(largerSubset)
+  end
 end
-
 
 p subsets([]) # => [[]]
 p subsets([1]) # => [[], [1]]
